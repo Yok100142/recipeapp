@@ -1,0 +1,81 @@
+{% extends 'template_dashboard.html' %}
+{% block css %}
+{% load humanize %}
+
+<link href="/static/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+
+
+<!-- Page Heading -->
+
+{% if page == "datalist" %}
+<h1 class="h3 mb-2 text-gray-800">Edit Pantip Recipe Data</h1>
+{% else %}
+<h1 class="h3 mb-2 text-gray-800">Edit Pantip Recipe Data from Report</h1>
+
+{% endif %}
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-body">
+
+    <div class="content">
+      <div class="container-fluid">
+        <!-- <form method='post' action=""> -->
+
+          {% if page == "datalist" %}
+          <form method='GET' action="{% url 'error:update_data' list_data.id %}">
+          {% else %}
+          <form method='GET' action="{% url 'error:update_report' reportid  list_data.id %}">
+
+          {% endif %}
+
+          <label for="validationTooltip01">Title</label>
+          <input type="text" name='title' id="title" class="form-control" value='{{list_data.title}}'
+            placeholder="Enter Title" required></input>
+
+          <label for="validationTooltip01">imagelink</label>
+          <input type="text" name='imagelink' id="imagelink" class="form-control" value='{{list_data.imagelink}}'
+            placeholder="Enter imagelink" required></input>
+
+          <label for="validationTooltip01">Ingredient</label>
+          <textarea name='ingredients' id="ingredients" class="form-control" placeholder="Enter Ingredient"
+            required>{{list_data.ingredients|join:","}}</textarea>
+
+
+          <br />
+          <div class="col-md-8 mb-6">
+            <div class="form-row">
+              <input class="btn btn-primary" type="submit" id='createButton' value='Save'>&nbsp;&nbsp;
+              {% csrf_token %}
+
+              {% if page == "datalist" %}
+              <a class="btn btn-info" href="{% url 'error:DataList' %}">Back</a>
+              {% else %}
+              <a class="btn btn-info" href="{% url 'error:index' %}">Back</a>
+
+              {% endif %}
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block javascript %}
+<!-- Page level plugins -->
+<script src="/static/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="/static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+{% endblock %}
+
+{% block javascript_ready %}
+$('#customer_table').DataTable();
+{% endblock %}

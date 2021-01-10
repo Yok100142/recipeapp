@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{title}}</title>
+    <link rel="icon" href="https://f.ptcdn.info/978/055/000/p3k2z0w5eDbyA2F02dP-o.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Custom fonts for this template-->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <script src="/static/js/vuejs/vue.js"></script>
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        .top-container {
+            background-color: #f1f1f1;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header {
+            padding: 10px 16px;
+            background: #555;
+            color: #f1f1f1;
+        }
+
+        .content {
+            padding: 16px;
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .sticky+.content {
+            padding-top: 102px;
+        }
+
+        form.example input[type=text] {
+            padding: 10px;
+            font-size: 17px;
+            border: 1px solid grey;
+            float: left;
+            width: 80%;
+            background: #f1f1f1;
+        }
+
+        form.example button {
+            float: left;
+            width: 20%;
+            padding: 10px;
+            background: #2196F3;
+            color: white;
+            font-size: 17px;
+            border: 1px solid grey;
+            border-left: none;
+            cursor: pointer;
+        }
+
+        form.example button:hover {
+            background: #0b7dda;
+        }
+
+        form.example::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .center {
+            text-align: center;
+            border: 3px solid green;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="/static/css/main.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <!-- <form action="{% url 'dashboard:searchmain' %}" action="" method="GET">
+                    <input type="hidden" id="action" name="action" value="wantlist" />
+                    <input type="hidden" id="notwant" name="notwant" value="{{notwant}}" />
+                    <input type="hidden" id="want" name="want" value="{{want}}" />
+                    <input type="hidden" id="want" name="searchinput" value="{{searchinput}}" /> -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Report Error</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+        <form action="{% url 'dashboard:sendreport' id %}" method="GET" id="senderror">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Recipe ID</label>
+              <input type="text" class="form-control" value="{{id}}" id="recipeid" name="recipeid" disabled>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea class="form-control" id="message-text" name="message-text"></textarea>
+            </div>
+          </form>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" form="senderror" >Add Ingredient</button>
+                </div>
+                <!-- </form> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="top-container"
+        style="background: url(/static/img/CiTi-BiSTRo-THAI-STREET-FOOD-1-Mar-Apr.jpg);background-size: cover;background-position: center center;">
+        <h1 style="font-size: 80px;color: white;text-shadow: -5px 0 black, 0 5px black, 5px 0 black, 0 -5px black;">My
+            Recipe</h1>
+    </div>
+
+    <div class="header" id="myHeader">
+        
+            <nav>
+                <a href="{% url 'dashboard:index' %}" style="font-size: 30px;color:white;">Home </a>  <h2 style="display: inline-block;"> | </h2>&nbsp;
+                <a href="{% url 'dashboard:searchmain' %}"  style="font-size: 30px;color:white;"> Search</a> 
+              </nav>
+    </div>
+    <div class="content">
+        
+        <div style="display: flex;flex-direction: row;flex-wrap: nowrap; justify-content: space-between;">
+            
+        <h2>{{title}}</h2>
+        <div style="margin-top: auto;margin-bottom: auto;">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"  style="height: 40px;">Report</button>
+        </div>
+          </div>
+
+        {% for ingredient in ingredient_data %}
+
+        <div
+            style="border: 2px solid;border-radius: 5px;display: inline-block;padding: 3px;margin-right: 10px;margin-top: 3px;">
+            {{ingredient}}
+        </div>
+        {% endfor %}
+        <br />&nbsp;
+        <div class="row" >
+            <div class="col-xl-9 col-md-8 mb-9" s>
+                <div class="card shadow mb-9" style="overflow-x: auto;">
+                    <div class="card-body" style="max-width: 800px;min-width: 100px;margin-left: auto;margin-right: auto;">
+                        {{desc_full | safe }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-4 mb-3">
+
+                <div class="card shadow mb-3" >
+                    <div class="card-body" style="max-width: 800px;margin-left: auto;margin-right: auto;">
+                        <h1>Related Recipes : </h1>
+                        {% for data in simiarlity_kratoo %}
+                            <!-- {{data}} -->
+                            <div  class='clickable-row' data-href="{% url 'dashboard:pagedata' data.id %}">
+                               
+                                <img src="{{data.imagelink}}"  style="width: 100%;margin-left: auto;margin-right: auto;"></img>
+                               
+                                <h5>{{data.title}}</h5>
+                                {% for data in data.ingredients %}
+                                <div
+                                    style="border: 2px solid;border-radius: 5px;display: inline-block;padding: 3px;margin-right: 10px;margin-top: 3px;">
+                                    {{data}}
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                        <br/>&nbsp;
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="/static/js/extention/choices.js"></script>
+
+ <script>
+    {% include "message.html" %}
+    </script>
+    <!-- <script>
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script> -->
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "ordering": false,
+                "searching": false,
+                //         "columnDefs": [
+                //     { "searchable": false, "targets": 0 }
+                //   ]
+
+
+            });
+            $(".clickable-row").click(function () {
+                window.location = $(this).data("href");
+            });
+
+        });
+        $(document).ready(function () {
+            $('.js-example-basic-multiple').select2();
+        });
+        $(document).ready(function () {
+            $('.js-example-basic-multiple2').select2();
+        });
+
+    </script>
+    
+    <!-- <script>
+        var closebtns = document.getElementsByClassName("close");
+        var i;
+        
+        for (i = 0; i < closebtns.length; i++) {
+          closebtns[i].addEventListener("click", function() {
+            this.parentElement.style.display = 'none';
+          });
+        }
+        </script> -->
+
+
+</body>
+
+</html>

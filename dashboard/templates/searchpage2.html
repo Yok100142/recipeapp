@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search Page</title>
+    <link rel="icon" href="https://f.ptcdn.info/978/055/000/p3k2z0w5eDbyA2F02dP-o.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        .top-container {
+            background-color: #f1f1f1;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header {
+            padding: 10px 16px;
+            background: #555;
+            color: #f1f1f1;
+        }
+
+        .content {
+            padding: 16px;
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .sticky+.content {
+            padding-top: 102px;
+        }
+
+        form.example input[type=text] {
+            padding: 10px;
+            font-size: 17px;
+            border: 1px solid grey;
+            float: left;
+            width: 80%;
+            background: #f1f1f1;
+        }
+
+        form.example button {
+            float: left;
+            width: 20%;
+            padding: 10px;
+            background: #2196F3;
+            color: white;
+            font-size: 17px;
+            border: 1px solid grey;
+            border-left: none;
+            cursor: pointer;
+        }
+
+        form.example button:hover {
+            background: #0b7dda;
+        }
+
+        form.example::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="/static/css/main.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <!-- <form action="{% url 'dashboard:searchmain' %}" action="" method="GET">
+                    <input type="hidden" id="action" name="action" value="wantlist" />
+                    <input type="hidden" id="notwant" name="notwant" value="{{notwant}}" />
+                    <input type="hidden" id="want" name="want" value="{{want}}" />
+                    <input type="hidden" id="want" name="searchinput" value="{{searchinput}}" /> -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">เพิ่มวัตถุดิบที่ต้องการ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <select class="js-example-basic-multiple" name="states[]" multiple="multiple"
+                            data-placeholder="Select a State" style="width: 100%;">
+
+                            <optgroup label="หมวดหมู่">
+                                {% for type in category %}
+                                <option value="{{type}}">{{type}}</option>
+
+                                {% endfor %}
+                            </optgroup>
+                            <optgroup label="รายการ">
+                                {% for type in ingredientlist %}
+                                <option value="{{type}}">{{type}}</option>
+
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="addnewingredient()">Add Ingredient</button>
+                    </div>
+                <!-- </form> -->
+            </div>
+        </div>
+    </div>
+ <!-- Modal2 -->
+ <div class="modal fade bd-example-modal-lg" id="exampleModal2" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-lg" role="document">
+     <div class="modal-content">
+         <!-- <form action="{% url 'dashboard:searchmain' %}" action="" method="GET">
+             <input type="hidden" id="action" name="action" value="wantlist" />
+             <input type="hidden" id="notwant" name="notwant" value="{{notwant}}" />
+             <input type="hidden" id="want" name="want" value="{{want}}" />
+             <input type="hidden" id="want" name="searchinput" value="{{searchinput}}" /> -->
+             <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">เพิ่มวัตถุดิบที่ไม่ต้องการ</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+             <div class="modal-body">
+
+                 <select class="js-example-basic-multiple2" name="states[]" multiple="multiple"
+                     data-placeholder="Select a State" style="width: 100%;">
+
+                     <optgroup label="หมวดหมู่">
+                         {% for type in category %}
+                         <option value="{{type}}">{{type}}</option>
+
+                         {% endfor %}
+                     </optgroup>
+                     <optgroup label="รายการ">
+                         {% for type in ingredientlist %}
+                         <option value="{{type}}">{{type}}</option>
+
+                         {% endfor %}
+                     </optgroup>
+                 </select>
+
+
+
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 <button type="button" class="btn btn-primary" onclick="addnewunwantingredient()">Add Ingredient</button>
+             </div>
+         <!-- </form> -->
+     </div>
+ </div>
+</div>
+    <div class="top-container"
+        style="background: url(/static/img/CiTi-BiSTRo-THAI-STREET-FOOD-1-Mar-Apr.jpg);background-size: cover;background-position: center center;">
+        <h1 style="font-size: 80px;color: white;text-shadow: -5px 0 black, 0 5px black, 5px 0 black, 0 -5px black;">My
+            Recipe</h1>
+    </div>
+
+    <div class="header" id="myHeader">
+        <nav>
+            <a href="{% url 'dashboard:index' %}" style="font-size: 30px;color:white;">Home </a>  <h2 style="display: inline-block;"> | </h2>&nbsp;
+            <a href="{% url 'dashboard:searchmain' %}"  style="font-size: 30px;color:white;"> Search</a> 
+          </nav>
+    </div>
+    <div class="content">
+
+        <!-- <p id="demo"></p> -->
+        <!-- <p id="demo2"></p> -->
+
+        <div class="s004" style="background: url();min-height: 0vh;background-color: gray;">
+            <form action="{% url 'dashboard:searchmain' %}" action="" id="deleteform" method="GET"
+                style="max-width: 1500px;">
+                <input type="hidden" id="action" name="action" value="wantlist" />
+                <input type="hidden" id="notwant" name="notwant" value="{{notwant}}" />
+                <input type="hidden" id="want" name="want" value="{{want}}" />
+                <fieldset>
+                    <!-- <legend style="font-size: 70px;text-shadow: -5px 0 black, 0 5px black, 5px 0 black, 0 -5px black;">My Recipe</legend> -->
+                    <div class="inner-form">
+                        <div class="input-field">
+                            <input class="form-control" id="choices-text-preset-values" value="{{searchinput}}"
+                                name="searchinput" type="text" placeholder="ชื่อสูตรอาหาร, ประเภท, ..." />
+                            <button class="btn-search">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path
+                                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div>
+                    <fieldset>
+                        <!-- <legend style="font-size: 70px;text-shadow: -5px 0 black, 0 5px black, 5px 0 black, 0 -5px black;">My Recipe</legend> -->
+                        <div class="inner-form">
+                            <div class="input-field">
+                                <input class="form-control" type="text" value="วัตถุดิบที่ต้องการ"
+                                    style="background-color: white;color: black; margin-top: 20px;" disabled />
+
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn-search" data-toggle="modal"
+                                    data-target="#exampleModal">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-plus" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!-- <div style="background-color: #0b7dda;"> -->
+                    <!-- <div class="row" style="padding-top: 0px;padding-left: 30px;"> -->
+                    <!-- <div class="col-9" style="background-color: white;height: 30px;">
+                        <h6 style="margin-top: 5px;">สูตรอาหารที่มี</h6>
+                    </div>
+
+                    <div class="col-3" style="padding-right: 25px;">
+
+                        <button type="button" class="w3-button w3-xlarge w3-green"
+                            style="padding: 0px;width: 100%;margin-top: -4px;">
+                            +</button>
+                    </div> -->
+
+                    <!-- </div> -->
+                    <div style="padding-left: 30px;min-height: 150px;padding-bottom: 20px;">
+
+                        {% for data in want %}
+                        <div
+                            style="border-radius: 5px;display: inline-block;padding: 4px;padding-left: 10px;padding-right: 10px;background-color: white;margin-top: 10px;margin-right: 10px;">
+                            {{data}}
+                            <span class="close" style="padding-right: 1px;padding-left: 4px;color:red;margin-top: -1px;"
+                                onclick="mydeletewant('{{data}}')">&times;</span>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <fieldset>
+                        <!-- <legend style="font-size: 70px;text-shadow: -5px 0 black, 0 5px black, 5px 0 black, 0 -5px black;">My Recipe</legend> -->
+                        <div class="inner-form">
+                            <div class="input-field">
+                                <input class="form-control" type="text" value="วัตถุดิบที่ไม่ต้องการ"
+                                    style="background-color: white;color: black;" disabled />
+                                <button class="btn-search" type="button"  data-toggle="modal"
+                                data-target="#exampleModal2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-plus" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="row" style="padding-left: 30px;">
+
+                        <!-- <div class="col-9" style="background-color: white;height: 30px;">
+                        <h6 style="margin-top: 5px;">สูตรอาหารที่ไม่มี</h6>
+                    </div>
+
+                    <div class="col-3" style="padding-right: 25px;">
+
+                        <button type="button" class="w3-button w3-xlarge w3-green"
+                            style="padding: 0px;width: 100%;margin-top: -4px;">
+                            +</button>
+                    </div> -->
+
+                        <div style="padding-left: 15px; min-height: 100px;">
+
+
+                            {% for data in notwant %}
+                            <div
+                                style="border-radius: 5px;display: inline-block;padding: 4px;background-color: white;margin-top: 10px;margin-right: 10px;">
+                                {{data}}
+                                <span class="close"
+                                    style="padding-right: 1px;padding-left: 4px;color:red;margin-top: -1px;"
+                                    onclick="mydeletenotwant('{{data}}')">&times;</span>
+
+                            </div>
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <div style="padding: 30px;">
+            <table id="example" class="display" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th style="width:20%;"></th>
+                        <th style="width:80%;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for data in searchdata %}
+                    <tr class='clickable-row' data-href="{% url 'dashboard:pagedata' data.id %}">
+                        <td><img src="{{data.imagelink}}" style="width: 200px;"></img> </td>
+                        <td>
+                            <div>
+                                <h3>{{data.title}}</h3>
+                                {% for data2 in data.ingredients %}
+                                <div
+                                    style="border: 2px solid;border-radius: 5px;display: inline-block;padding: 3px;margin-right: 10px;margin-top: 3px;">
+                                    {{data2}}
+                                </div> 
+                                {% endfor %}
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="/static/js/extention/choices.js"></script>
+    <!-- <script>
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script> -->
+    <script>
+
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "ordering": false,
+                "searching": false,
+                //         "columnDefs": [
+                //     { "searchable": false, "targets": 0 }
+                //   ]
+
+
+            });
+            $(".clickable-row").click(function () {
+                window.location = $(this).data("href");
+            });
+
+        });
+        $(document).ready(function () {
+            $('.js-example-basic-multiple').select2();
+        });
+        $(document).ready(function () {
+            $('.js-example-basic-multiple2').select2();
+        });
+        
+    </script>
+    <script>
+        function mydeletewant(id) {
+            var wantlist = {{ want| safe}};
+        wantlist = jQuery.grep(wantlist, function (value) {
+            return value != id;
+        });
+        document.getElementById("want").value = wantlist;
+        // document.getElementById("demo").innerHTML = document.getElementById("want").value;
+        document.getElementById("deleteform").submit();
+    }
+
+    </script>
+
+<script>
+    function addnewingredient() {
+        var wantlist = {{ want| safe}};
+        var children = wantlist.concat($('.js-example-basic-multiple').val());
+    // document.getElementById("demo").innerHTML = children; 
+    document.getElementById("want").value = children;
+    document.getElementById("deleteform").submit();
+    }
+    
+    function addnewunwantingredient() {
+        var notwantlist = {{ notwant| safe}};
+        var children = notwantlist.concat($('.js-example-basic-multiple2').val());
+    // document.getElementById("demo").innerHTML = children; 
+    document.getElementById("notwant").value = children;
+    document.getElementById("deleteform").submit();
+    }
+</script>
+    <script>
+        function mydeletenotwant(id) {
+            var notwantlist = {{ notwant| safe}};
+        notwantlist = jQuery.grep(notwantlist, function (value) {
+            return value != id;
+        });
+        document.getElementById("notwant").value = notwantlist;
+        // document.getElementById("demo2").innerHTML = document.getElementById("notwant").value;
+        document.getElementById("deleteform").submit();
+        }
+
+    </script>
+    <script>
+        var textPresetVal = new Choices('#choices-text-preset-values',
+            {
+                removeItemButton: true,
+            });
+
+    </script>
+
+    <!-- <script>
+        var closebtns = document.getElementsByClassName("close");
+        var i;
+        
+        for (i = 0; i < closebtns.length; i++) {
+          closebtns[i].addEventListener("click", function() {
+            this.parentElement.style.display = 'none';
+          });
+        }
+        </script> -->
+
+
+</body>
+
+</html>

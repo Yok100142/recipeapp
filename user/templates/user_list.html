@@ -1,0 +1,83 @@
+{% extends 'template_dashboard.html' %}
+{% block css %}
+{% load humanize %}
+
+<link href="/static/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+{% block content %} 
+
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">List {{ page }} </h1>
+          <!-- DataTales Example -->
+           <a href="{% url 'user:create' %}" class="btn btn-primary">Create</a>
+           <br/>
+           <br/>
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="customer_table" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>Create Time</th>
+                      <th>Last Login</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                    
+                  </thead>
+                  <tfoot>
+                      <tr>
+                      <th>Email</th>
+                      <th>Create Time</th>
+                      <th>Last Login</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                    
+                  </tfoot>
+                  <tbody>
+                    {% for user in list_user %}
+                    <tr>
+                      <td>
+                    
+                      {{ user.email }}</td>
+
+                      <td align='right'>{{ user.date_joined }} </td>
+                      <td align='right'>{{ user.last_login }}</td>
+
+                      <td align='right'>
+                      {% if user.is_active %}
+                        Active
+                        {% else %}
+                        Disable
+                        {% endif %}
+                        </td>
+                      
+                    <td>
+                       
+                        <a href="{% url 'user:edit' user.id %}" class="btn btn-success">Edit</a>
+                        <a href="{% url 'user:delete' user.id %}" class="btn btn-danger">Delete</a>
+                      </th>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        
+
+{% endblock %}
+
+{% block javascript %}
+<!-- Page level plugins -->
+  <script src="/static/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="/static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+{% endblock %}
+
+{% block javascript_ready %}
+  $('#customer_table').DataTable();
+{% endblock %}

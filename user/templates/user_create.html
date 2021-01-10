@@ -1,0 +1,147 @@
+{% extends 'template_dashboard.html' %}
+
+
+{% block css %}
+    
+    <style>
+    /* The switch - the box around the slider */
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    }
+
+    /* The slider */
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    input:checked + .slider {
+    background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+    border-radius: 34px;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
+    } 
+    </style>
+
+{% endblock %}
+
+
+{% block content %} 
+
+<form method='post' action="{% url 'user:save'  %}">
+  <div class="form-row">
+    <div class="col-md-8 mb-6">
+      <label for="validationTooltip01">Email</label>
+      <input type="email" name='email' class="form-control"  placeholder="Enter Email"  required>
+    </div>
+    <div class="col-md-8 mb-6">
+      <label for="validationTooltip02">Password</label>
+      <input type="password" name='password' id='password' class="form-control" placeholder="Enter  Password"  required>
+    </div>
+    <div class="col-md-8 mb-6">
+      <label for="validationTooltip01">Confirm  Password</label>
+      <input type="password" name='confirm_password' id='confirm_password' class="form-control" placeholder="Enter Confirm Password"  required>
+    </div>
+
+    <!-- <div class="col-md-8 mb-6">
+    <label for="validationTooltip02">Is Admin</label>
+        <li class="list-group-item">
+ 
+           <label class="switch">
+                <input type="checkbox" name='chk_is_superuser'>
+                <span class="slider round"></span>
+                </label>
+        </li>
+    </div> -->
+  
+
+   <div class="col-md-8 mb-6">
+    <label for="validationTooltip02">User Status</label>
+        <li class="list-group-item">
+ 
+           <label class="switch">
+                <input type="checkbox" name='chk_is_active' checked>
+                <span class="slider round"></span>
+                </label>
+        </li>
+    </div>
+  </div>
+  <br/>
+  <div class="col-md-8 mb-6">
+  <div class="form-row">
+    <input class="btn btn-primary" type="submit" value='Save'>&nbsp;&nbsp;
+    {% csrf_token %}
+    <a class="btn btn-info"  href="{% url 'user:list' %}">Back</a>
+  </div>
+  </div>
+</form>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+
+    var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword(){
+    if(password.value != confirm_password.value) {
+        confirm_password.setCustomValidity("Passwords Don't Match");
+    } else {
+        confirm_password.setCustomValidity('');
+    }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+    //return true;
+
+
+</script>
+
+{% endblock %}
