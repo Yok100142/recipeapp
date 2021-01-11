@@ -395,9 +395,10 @@
 
 
             });
-            $(".clickable-row").click(function () {
+                 
+            $('#example tbody').on('click', 'tr', function () {
                 window.location = $(this).data("href");
-            });
+            } );
 
         });
         $(document).ready(function () {

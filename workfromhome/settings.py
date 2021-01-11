@@ -26,7 +26,7 @@ SECRET_KEY = 't4e97%a(js*$6&-t%lr1y-^34j$=)$a(pz+njwn@+c2n_@04v&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost","0.0.0.0","127.0.0.1","saturn.mikelab.net"]
 
 
 # Application definition
