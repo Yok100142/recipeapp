@@ -73,6 +73,16 @@
             clear: both;
             display: table;
         }
+       /* Make Select2 boxes match Bootstrap3 heights: */
+       .select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -98,7 +108,7 @@
                     <input type="hidden" id="want" name="want" value="{{want}}" />
                     <input type="hidden" id="want" name="searchinput" value="{{searchinput}}" /> -->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">เพิ่มวัตถุดิบที่ต้องการ</h5>
+                        <h5 class="modal-title" id="exampleModalLabel" style="font-size: 20px;">เพิ่มวัตถุดิบที่ต้องการ</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -144,7 +154,7 @@
              <input type="hidden" id="want" name="want" value="{{want}}" />
              <input type="hidden" id="want" name="searchinput" value="{{searchinput}}" /> -->
              <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">เพิ่มวัตถุดิบที่ไม่ต้องการ</h5>
+                 <h5 class="modal-title" id="exampleModalLabel"style="font-size: 20px;">เพิ่มวัตถุดิบที่ไม่ต้องการ</h5>
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                  </button>
@@ -225,7 +235,7 @@
                         <div class="inner-form">
                             <div class="input-field">
                                 <input class="form-control" type="text" value="วัตถุดิบที่ต้องการ"
-                                    style="background-color: white;color: black; margin-top: 20px;" disabled />
+                                    style="background-color: white;color: black; margin-top: 20px; font-size: 20px;" disabled />
 
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn-search" data-toggle="modal"
@@ -254,13 +264,13 @@
                     </div> -->
 
                     <!-- </div> -->
-                    <div style="padding-left: 30px;min-height: 150px;padding-bottom: 20px;">
+                    <div style="padding-left: 30px;min-height: 150px;padding-bottom: 20px;font-size: 20px;">
 
                         {% for data in want %}
                         <div
                             style="border-radius: 5px;display: inline-block;padding: 4px;padding-left: 10px;padding-right: 10px;background-color: white;margin-top: 10px;margin-right: 10px;">
                             {{data}}
-                            <span class="close" style="padding-right: 1px;padding-left: 4px;color:red;margin-top: -1px;"
+                            <span class="close" style="padding-right: 1px;padding-left: 6px;color:red;margin-top: -2px;font-size: 30px;"
                                 onclick="mydeletewant('{{data}}')">&times;</span>
 
                         </div>
@@ -271,8 +281,8 @@
                         <!-- <legend style="font-size: 70px;text-shadow: -5px 0 black, 0 5px black, 5px 0 black, 0 -5px black;">My Recipe</legend> -->
                         <div class="inner-form">
                             <div class="input-field">
-                                <input class="form-control" type="text" value="วัตถุดิบที่ไม่ต้องการ"
-                                    style="background-color: white;color: black;" disabled />
+                                <input class="form-control" type="text" value="วัตถุดิบที่ไม่ต้องการ" 
+                                    style="background-color: white;color: black;font-size: 20px;" disabled />
                                 <button class="btn-search" type="button"  data-toggle="modal"
                                 data-target="#exampleModal2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -297,7 +307,7 @@
                             +</button>
                     </div> -->
 
-                        <div style="padding-left: 15px; min-height: 100px;">
+                        <div style="padding-left: 15px; min-height: 100px;font-size: 20px;">
 
 
                             {% for data in notwant %}
@@ -305,7 +315,7 @@
                                 style="border-radius: 5px;display: inline-block;padding: 4px;background-color: white;margin-top: 10px;margin-right: 10px;">
                                 {{data}}
                                 <span class="close"
-                                    style="padding-right: 1px;padding-left: 4px;color:red;margin-top: -1px;"
+                                    style="padding-right: 1px;padding-left: 6px;color:red;margin-top: -2px;font-size: 30px;"
                                     onclick="mydeletenotwant('{{data}}')">&times;</span>
 
                             </div>
@@ -331,13 +341,13 @@
 
                     {% for data in searchdata %}
                     <tr class='clickable-row' data-href="{% url 'dashboard:pagedata' data.id %}">
-                        <td><img src="{{data.imagelink}}" style="width: 200px;"></img> </td>
+                        <td><img src="{{data.imagelink}}" style="width: 100%;min-width: 150px;max-width: 200px;"></img> </td>
                         <td>
                             <div>
                                 <h3>{{data.title}}</h3>
                                 {% for data2 in data.ingredients %}
                                 <div
-                                    style="border: 2px solid;border-radius: 5px;display: inline-block;padding: 3px;margin-right: 10px;margin-top: 3px;">
+                                    style="border: 2px solid;border-radius: 5px;display: inline-block;padding: 3px;margin-right: 10px;margin-top: 3px;font-size: 20px;">
                                     {{data2}}
                                 </div> 
                                 {% endfor %}
@@ -402,10 +412,10 @@
 
         });
         $(document).ready(function () {
-            $('.js-example-basic-multiple').select2();
+            $('.js-example-basic-multiple').select2({dropdownCssClass: "myFont" });
         });
         $(document).ready(function () {
-            $('.js-example-basic-multiple2').select2();
+            $('.js-example-basic-multiple2').select2({dropdownCssClass: "myFont" });
         });
         
     </script>

@@ -63,6 +63,13 @@ def pagedata(request,id):
     for i in recipe_data.find({ "id": id }):
         ingredient_data=(i["ingredients"])
 
+    # full_ingredient_data=[]
+    # for i in ingredient_data:
+    #     try:
+    #         full_ingredient_data.append(re.findall(i+'[ ก-๏]{0,9}[ ]*[½↉⅓⅔¼¾⅕⅖⅗⅘⅙⅚⅐⅛⅜⅝⅞⅑⅒⅟0-9๐-๙]+[½↉⅓⅔¼¾⅕⅖⅗⅘⅙⅚⅐⅛⅜⅝⅞⅑⅒⅟๐-๙0-9-+ /]*[ก-๏a-zA-Z]+', desc_full)[0])
+            
+    #     except :
+    #         full_ingredient_data.append(i)
     testdata=[]
     # recipe_data = pantip_ingredients["recipe_data"]
     for i in recipe_data.find().sort("point",-1):
@@ -109,6 +116,7 @@ def pagedata(request,id):
     testdata=temp_data
 
 
+    # context={"page":page,"id":id,"desc_full":desc_full,"title":content_json["_source"]["title"],"ingredient_data":ingredient_data,"simiarlity_kratoo":testdata,"full_ingredient_data":full_ingredient_data}
     context={"page":page,"id":id,"desc_full":desc_full,"title":content_json["_source"]["title"],"ingredient_data":ingredient_data,"simiarlity_kratoo":testdata}
 
     # print("pagedata",desc_full)
@@ -178,7 +186,7 @@ def searchmain(request):
         searchinputlist=searchinput.split(",")
         temp_data=[]
         for i in testdata:
-           if all(ele in i["title"]+' '+i["desc"] for ele in searchinputlist):
+           if all(ele in i["title"]+' '+i["desc"]+str(i["ingredients"]) for ele in searchinputlist):
                temp_data.append(i)
         testdata=temp_data
 

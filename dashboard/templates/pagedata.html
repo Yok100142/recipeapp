@@ -163,15 +163,18 @@
         <div style="display: flex;flex-direction: row;flex-wrap: nowrap; justify-content: space-between;">
             
         <h2>{{title}}</h2>
-        <div style="margin-top: auto;margin-bottom: auto;">
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"  style="height: 40px;">Report</button>
+        <div style="margin-top: auto;margin-bottom: auto; ">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"  style="height: 40px;font-size: 20px;margin-bottom: 5px;">Report</button>
+        <a href="https://pantip.com/topic/{{id}}"><button type="button" class="btn" style="height: 40px;font-size: 20px;background-color: #532980;align-items: center;margin-bottom: 5px;"><img src="/static/img/logo-mobile-pantip-white-beta.png" height="40" style="border-radius: 5px;margin-top: -2px;"/></button></a>
+        
         </div>
           </div>
+
 
         {% for ingredient in ingredient_data %}
 
         <div
-            style="border: 2px solid;border-radius: 5px;display: inline-block;padding: 3px;margin-right: 10px;margin-top: 3px;">
+            style="border: 2px solid;border-radius: 5px;display: inline-block;padding: 3px;margin-right: 10px;margin-top: 3px;font-size: 18px;">
             {{ingredient}}
         </div>
         {% endfor %}
@@ -179,12 +182,22 @@
         <div class="row" >
             <div class="col-xl-9 col-md-8 mb-9" s>
                 <div class="card shadow mb-9" style="overflow-x: auto;">
-                    <div class="card-body" style="max-width: 800px;min-width: 100px;margin-left: auto;margin-right: auto;">
+                    <div class="card-body" style="max-width: 800px;min-width: 100px;margin-left: auto;margin-right: auto;font-size: 20px;">
                         {{desc_full | safe }}
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-md-4 mb-3">
+                <!-- <div class="card shadow mb-3" >
+                    <div class="card-body" style="max-width: 800px;">
+                        <h1>Ingredient : </h1>
+                        
+                        {% for ingredient in full_ingredient_data %}
+
+                        {{ingredient}}<br/>
+                        {% endfor %}
+                    </div>
+                </div> -->
 
                 <div class="card shadow mb-3" >
                     <div class="card-body" style="max-width: 800px;margin-left: auto;margin-right: auto;">
