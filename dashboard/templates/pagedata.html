@@ -138,7 +138,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" form="senderror" >Add Ingredient</button>
+                    <button type="submit" class="btn btn-primary" form="senderror" >Report</button>
                 </div>
                 <!-- </form> -->
             </div>
@@ -165,7 +165,7 @@
         <h2>{{title}}</h2>
         <div style="margin-top: auto;margin-bottom: auto; ">
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"  style="height: 40px;font-size: 20px;margin-bottom: 5px;">Report</button>
-        <a href="https://pantip.com/topic/{{id}}"><button type="button" class="btn" style="height: 40px;font-size: 20px;background-color: #532980;align-items: center;margin-bottom: 5px;"><img src="/static/img/logo-mobile-pantip-white-beta.png" height="40" style="border-radius: 5px;margin-top: -2px;"/></button></a>
+        <a href="https://pantip.com/topic/{{id}}" target="_blank"><button type="button" class="btn" style="height: 40px;font-size: 20px;background-color: #532980;align-items: center;margin-bottom: 5px;"><img src="/static/img/logo-mobile-pantip-white-beta.png" height="40" style="border-radius: 5px;margin-top: -2px;"/></button></a>
         
         </div>
           </div>
@@ -204,7 +204,7 @@
                         <h1>Related Recipes : </h1>
                         {% for data in simiarlity_kratoo %}
                             <!-- {{data}} -->
-                            <div  class='clickable-row' data-href="{% url 'dashboard:pagedata' data.id %}">
+                            <div  class='clickable-row' data-href="{% url 'dashboard:pagedata' data.id %}" >
                                
                                 <img src="{{data.imagelink}}"  style="width: 100%;margin-left: auto;margin-right: auto;"></img>
                                
@@ -274,7 +274,7 @@
 
             });
             $(".clickable-row").click(function () {
-                window.location = $(this).data("href");
+                window.open($(this).data("href"), $(this).data("target"));
             });
 
         });

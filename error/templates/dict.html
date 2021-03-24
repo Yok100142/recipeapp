@@ -20,6 +20,25 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
+                  <!-- <a href="{% url 'dashboard:downloadIngrediwnDict' %}" class="btn btn-primary" style="text-align: right;" download><i class="fas fa-download"></i> Download Ingredient Dictionary file</a> -->
+                  
+                  <!-- <button  type="button" class="btn btn-secondary" >upload file</button> -->
+                  <br/>
+
+
+                  <form action="" method="POST"  enctype="multipart/form-data">
+                  <a href="{% url 'dashboard:downloadIngrediwnDict' %}" class="btn btn-primary" style="text-align: right;" download><i class="fas fa-download"></i> Download Ingredient Dictionary file</a>
+                  <!-- <input type="hidden" name="hidden" value="{{count}}"></input> -->
+                  &nbsp;
+                  &nbsp;
+                  &nbsp;<div style="display: inline;border: 2px solid green;border-radius: 12px;padding: 12px;">
+                    <!-- <input type="file" class="btn btn-primary" id="myfile" name="myfile" ><br><br> -->
+                      <input type="file" id="myfile" name="myfile"  />
+                      <!-- <input type="file" id="myfile" name="myfile" onchange='this.form.submit();' /> -->
+                      <label class="btn btn-primary" for="myfile" style="margin: 5px;">Upload file</label>
+                    {% csrf_token %}</div>
+                  </form>
+                  <br/>
                   <table class="table table-bordered" id="copyPerformance_table" width="100%" cellspacing="0">
                     <thead>
                       <tr>

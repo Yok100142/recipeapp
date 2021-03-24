@@ -21,8 +21,9 @@ auth_db = urllib.parse.quote_plus('admin')
 server = urllib.parse.quote_plus('mars.mikelab.net')
 port = urllib.parse.quote_plus('27017')
 #-------------------------------------------------------------
-clickstream_client = MongoClient(f'mongodb://{username}:{password}@{server}:{port}/?authSource={auth_db}')
+# clickstream_client = MongoClient(f'mongodb://{username}:{password}@{server}:{port}/?authSource={auth_db}')
 # clickstream_collection = clickstream_client['newsfeed2']
+clickstream_client = MongoClient('docker.for.mac.host.internal',27017)
 pantip_ingredients = clickstream_client['pantip_recipes']
 
 @login_required()
@@ -176,6 +177,7 @@ def update_report(request,reportid,id):
             return HttpResponseRedirect(reverse('error:index'))
         # report.delete()
         report.status="updated"
+        report.edit_user="nichakarn.ra@ku.th"
         report.save()
         messages.add_message(request, messages.INFO, 'Update Data Successful')
         return HttpResponseRedirect(reverse('error:index'))

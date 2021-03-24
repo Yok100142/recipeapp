@@ -217,7 +217,7 @@
                     <div class="inner-form">
                         <div class="input-field">
                             <input class="form-control" id="choices-text-preset-values" value="{{searchinput}}"
-                                name="searchinput" type="text" placeholder="ชื่อสูตรอาหาร, ประเภท, ..." />
+                                name="searchinput" type="text" placeholder="วัตถุดิบ, ประเภท, ..." />
                             <button class="btn-search">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path
@@ -340,7 +340,7 @@
                 <tbody>
 
                     {% for data in searchdata %}
-                    <tr class='clickable-row' data-href="{% url 'dashboard:pagedata' data.id %}">
+                    <tr class='clickable-row' data-href="{% url 'dashboard:pagedata' data.id %}" data-target="_blank">
                         <td><img src="{{data.imagelink}}" style="width: 100%;min-width: 150px;max-width: 200px;"></img> </td>
                         <td>
                             <div>
@@ -407,7 +407,7 @@
             });
                  
             $('#example tbody').on('click', 'tr', function () {
-                window.location = $(this).data("href");
+                window.open($(this).data("href"), $(this).data("target"));
             } );
 
         });

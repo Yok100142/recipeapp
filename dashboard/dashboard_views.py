@@ -13,11 +13,14 @@ from error.models import Report
 from django.contrib import messages
 
 from pymongo import MongoClient
+import json
 import urllib
 import requests
 import sys
 from numpy import dot,isnan
 from numpy.linalg import norm
+from datetime import datetime
+from django.views.static import serve
 # from sklearn.metrics.pairwise import cosine_similarity
 
 #--Edit your configuration here ------------------------------
@@ -28,6 +31,8 @@ server = urllib.parse.quote_plus('mars.mikelab.net')
 port = urllib.parse.quote_plus('27017')
 #-------------------------------------------------------------
 clickstream_client = MongoClient(f'mongodb://{username}:{password}@{server}:{port}/?authSource={auth_db}')
+
+clickstream_client = MongoClient('docker.for.mac.host.internal',27017)
 # clickstream_collection = clickstream_client['newsfeed2']
 pantip_ingredients = clickstream_client['pantip_recipes']
 
@@ -106,12 +111,12 @@ def pagedata(request,id):
             else:
                 b.append(0)
         cos_sim = dot(a, b)/(norm(a)*norm(b))
-        if not isnan(cos_sim):
+        if not isnan(cos_sim) and i['id']!=id:
             # print(cos_sim)
             temp_data.append({"cos_sim":cos_sim,"data":i})
     temp_data=sorted(temp_data, key = lambda i: i['cos_sim'],reverse=True)
     
-    temp_data=[x["data"] for x in temp_data[1:11]] 
+    temp_data=[x["data"] for x in temp_data[:11]] 
     # print(temp_data)
     testdata=temp_data
 
@@ -186,7 +191,7 @@ def searchmain(request):
         searchinputlist=searchinput.split(",")
         temp_data=[]
         for i in testdata:
-           if all(ele in i["title"]+' '+i["desc"]+str(i["ingredients"]) for ele in searchinputlist):
+           if all(ele in i["title"]+' '+str(i["ingredients"])+str(i["tags"]) for ele in searchinputlist):
                temp_data.append(i)
         testdata=temp_data
 
@@ -300,3 +305,19 @@ def searchmain(request):
 
     print('Time: ', stop - start)  
     return render(request,'searchpage2.html',context) 
+
+
+def downloadIngrediwnDict(request):
+    ingredient_dict = pantip_ingredients["ingredient_dict"]
+    for i in ingredient_dict.find().sort("$natural", -1).limit(1):
+        ingredient_dict_data=i
+        ingredient_dict_data.pop("_id")
+        ingredient_dict_data.pop("timestamp")
+    filepath=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'error/ingredient2.json')
+
+    print(os.path.dirname(filepath), os.path.basename(filepath))
+    
+    with open('error/ingredient2.json', 'w', encoding='utf-8') as f:
+        json.dump(ingredient_dict_data, f, ensure_ascii=False, indent=4)
+    return serve(request, os.path.basename(filepath),os.path.dirname(filepath))
+    

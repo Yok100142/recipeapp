@@ -10,11 +10,14 @@
 <!-- Page Heading -->
 
 {% if page == "datalist" %}
-<h1 class="h3 mb-2 text-gray-800">Edit Pantip Recipe Data</h1>
+<h1 class="h3 mb-2 text-gray-800" style="display:inline-block">Edit Pantip Recipe Data</h1>
+
 {% else %}
-<h1 class="h3 mb-2 text-gray-800">Edit Pantip Recipe Data from Report</h1>
+<h1 class="h3 mb-2 text-gray-800" style="display:inline-block">Edit Pantip Recipe Data from Report</h1>
 
 {% endif %}
+
+<a href="https://pantip.com/topic/{{list_data.id}}"  target="_blank"><button type="button" class="btn" style="height: 50px;font-size: 20px;background-color: #532980;align-items: center;margin-bottom: 5px;"><img src="/static/img/logo-mobile-pantip-white-beta.png" height="40" style="border-radius: 5px;margin-top: -2px;"/></button></a>
 
 
 <!-- DataTales Example -->
