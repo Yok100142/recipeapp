@@ -24,10 +24,10 @@ from django.views.static import serve
 # from sklearn.metrics.pairwise import cosine_similarity
 
 #--Edit your configuration here ------------------------------
-username = urllib.parse.quote_plus('yok')
-password = urllib.parse.quote_plus('yok100142')
-auth_db = urllib.parse.quote_plus('admin')
-server = urllib.parse.quote_plus('mars.mikelab.net')
+username = urllib.parse.quote_plus('')
+password = urllib.parse.quote_plus('')
+auth_db = urllib.parse.quote_plus('')
+server = urllib.parse.quote_plus('')
 port = urllib.parse.quote_plus('27017')
 #-------------------------------------------------------------
 clickstream_client = MongoClient(f'mongodb://{username}:{password}@{server}:{port}/?authSource={auth_db}')
@@ -48,7 +48,7 @@ def pagedata(request,id):
     import timeit
     start = timeit.default_timer()
     page="pagedata"    
-    url = requests.get("https://ptdev03.mikelab.net/kratooc/"+str(id))
+    url = requests.get("https://"+str(id))
     content_json = json.loads(url.text)
     desc_full = content_json["_source"]["desc_full"]
 

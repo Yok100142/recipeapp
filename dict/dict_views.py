@@ -13,10 +13,10 @@ from pymongo import MongoClient
 import urllib
 from dict.models import ReportError
 #--Edit your configuration here ------------------------------
-username = urllib.parse.quote_plus('yok')
-password = urllib.parse.quote_plus('yok100142')
-auth_db = urllib.parse.quote_plus('admin')
-server = urllib.parse.quote_plus('mars.mikelab.net')
+username = urllib.parse.quote_plus('')
+password = urllib.parse.quote_plus('')
+auth_db = urllib.parse.quote_plus('')
+server = urllib.parse.quote_plus('')
 port = urllib.parse.quote_plus('27017')
 #-------------------------------------------------------------
 clickstream_client = MongoClient(f'mongodb://{username}:{password}@{server}:{port}/?authSource={auth_db}')

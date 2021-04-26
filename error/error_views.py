@@ -15,10 +15,10 @@ from error.models import Report
 from django.contrib import messages
 import requests
 #--Edit your configuration here ------------------------------
-username = urllib.parse.quote_plus('yok')
-password = urllib.parse.quote_plus('yok100142')
-auth_db = urllib.parse.quote_plus('admin')
-server = urllib.parse.quote_plus('mars.mikelab.net')
+username = urllib.parse.quote_plus('')
+password = urllib.parse.quote_plus('')
+auth_db = urllib.parse.quote_plus('')
+server = urllib.parse.quote_plus('')
 port = urllib.parse.quote_plus('27017')
 #-------------------------------------------------------------
 # clickstream_client = MongoClient(f'mongodb://{username}:{password}@{server}:{port}/?authSource={auth_db}')
@@ -96,7 +96,6 @@ def update_data(request,id):
         # point=request.GET.get('point')
         # desc=request.GET.get('desc')
 
-        # url = requests.get("https://ptdev03.mikelab.net/kratooc/"+str(id))
         # content_json = json.loads(url.text)
         # desc = content_json["_source"]["desc_full"]
         # point = content_json["_source"]["point"]
@@ -162,7 +161,6 @@ def update_report(request,reportid,id):
 
         # point=request.GET.get('point')
         # desc=request.GET.get('desc')
-        # url = requests.get("https://ptdev03.mikelab.net/kratooc/"+str(id))
         # content_json = json.loads(url.text)
         # desc = content_json["_source"]["desc_full"]
         # point = content_json["_source"]["point"]
